@@ -13,25 +13,25 @@ companion object.
 
 ## Dependency Specification
 
-The latest version of the library is 0.1, and it may be obtained from the Maven Central repository.
+The latest version of the library is 1.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>0.1</version>
+      <version>1.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:0.1'
+    implementation 'net.pwall.log:log-front-kotlin:1.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:0.1")
+    implementation("net.pwall.log:log-front-kotlin:1.0")
 ```
 
 Peter Wall
 
-2020-10-16
+2021-05-16
