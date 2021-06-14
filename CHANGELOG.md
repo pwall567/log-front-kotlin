@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.0] - 2021-06-15
+### Changed
+- `pom.xml`: updated to later version of `log-front`
+- `LoggerUtil.kt`: added functions to check `LogItem` entries
+
 ## [1.0] - 2021-05-16
 ### Changed
 - `pom.xml`: updated versions of `log-front` and `maven-kotlin`; bumped version to 1.0

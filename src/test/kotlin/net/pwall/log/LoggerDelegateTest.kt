@@ -30,7 +30,7 @@ import kotlin.test.expect
 
 class LoggerDelegateTest {
 
-    val log1 by LoggerDelegate()
+    private val log1 by LoggerDelegate()
 
     @Test fun `should create logger for class`() {
         expect("net.pwall.log.LoggerDelegateTest") { log1.name }
