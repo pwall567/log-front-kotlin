@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.2] - 2021-06-26
+### Changed
+- `pom.xml`: updated to later version of `log-front`
+- `LoggerUtil`: added `error` function with lambda as last parameter
+- `travis.yml`: fixed error
+- `README.md`: added documentation
+
 ## [2.1] - 2021-06-26
 ### Changed
 - `pom.xml`: updated to later version of `log-front`

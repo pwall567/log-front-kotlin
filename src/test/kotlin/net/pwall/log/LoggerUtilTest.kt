@@ -37,6 +37,20 @@ class LoggerUtilTest {
         expect("net.pwall.log.LoggerUtilTest") { LoggerFactory.getDefault().getLogger(LoggerUtilTest::class).name }
     }
 
+    @Test fun `should use alternate function signature for error with Throwable`() {
+        val logList = LogList()
+        logList.use {
+            val logger = LoggerFactory.getDefault().getLogger(LoggerUtilTest::class)
+            val exception = IllegalStateException("Dummy exception")
+            logger.error(exception) { "Error message" }
+            val iterator = logList.iterator()
+            assertTrue { iterator.hasNext() }
+            val logItem = iterator.next()
+            assertTrue { logItem isError "Error message" }
+            expect(exception) { logItem.throwable }
+        }
+    }
+
     @Test fun `should check whether LogItem is trace`() {
         val logItem = LogItem(Instant.now(), "xyz", Level.TRACE, "Hello", null)
         assertTrue { logItem isTrace "Hello" }

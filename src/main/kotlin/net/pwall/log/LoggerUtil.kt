@@ -36,6 +36,8 @@ import kotlin.reflect.KClass
  */
 fun LoggerFactory.getLogger(kotlinClass: KClass<*>): Logger = getLogger(kotlinClass.qualifiedName)
 
+fun Logger.error(throwable: Throwable, messageSupplier: () -> Any) = error(messageSupplier, throwable)
+
 /**
  * Test whether a [LogItem] represents a message with level `TRACE` and the specified text.
  *
