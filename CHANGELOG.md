@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.4] - 2021-09-29
+### Changed
+- `pom.xml`: updated to later version of `log-front`
+
 ## [2.3] - 2021-08-29
 ### Changed
 - `pom.xml`: updated to later versions of `log-front` and `maven-kotlin`
