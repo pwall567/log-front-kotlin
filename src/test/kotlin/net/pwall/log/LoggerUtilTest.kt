@@ -2,7 +2,7 @@
  * @(#) LoggerUtilTest.kt
  *
  * log-front-kotlin  Logging interface in Kotlin
- * Copyright (c) 2020 Peter Wall
+ * Copyright (c) 2020, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,8 +38,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should use alternate function signature for error with Throwable`() {
-        val logList = LogList()
-        logList.use {
+        LogList().use { logList ->
             val logger = LoggerFactory.getDefault().getLogger(LoggerUtilTest::class)
             val exception = IllegalStateException("Dummy exception")
             logger.error(exception) { "Error message" }
