@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [2.6] - 2022-01-27
+### Changed
+- `pom.xml`: updated to later version of `log-front`
+
 ## [2.5] - 2022-01-04
 ### Changed
 - `pom.xml`: updated to later version of `log-front`

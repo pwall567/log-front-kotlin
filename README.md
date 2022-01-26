@@ -64,25 +64,25 @@ There are, of course, `isTrace`, `isDebug` and `isWarning` functions in both the
 
 ## Dependency Specification
 
-The latest version of the library is 2.5, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.6, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>2.5</version>
+      <version>2.6</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:2.5'
+    implementation 'net.pwall.log:log-front-kotlin:2.6'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:2.5")
+    implementation("net.pwall.log:log-front-kotlin:2.6")
 ```
 
 Peter Wall
 
-2022-01-04
+2022-01-27
