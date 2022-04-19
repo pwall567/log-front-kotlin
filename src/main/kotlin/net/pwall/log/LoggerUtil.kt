@@ -2,7 +2,7 @@
  * @(#) LoggerUtil.kt
  *
  * log-front-kotlin  Logging interface in Kotlin
- * Copyright (c) 2020, 2021 Peter Wall
+ * Copyright (c) 2020, 2021, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,32 @@
 package net.pwall.log
 
 import kotlin.reflect.KClass
+import java.time.Clock
 
 /**
- * Get a [Logger] for a Kotlin [KClass] (Kotlin equivalent of same function taking a Java [Class]).
+ * Get a [Logger] for a Kotlin [KClass], using the optional [Level] and [Clock]. (Kotlin equivalent of same function
+ * taking a Java [Class]).
  *
  * @receiver            [LoggerFactory]
  * @param   kotlinClass a Kotlin [KClass]
+ * @param   level       the [Level]
+ * @param   clock       the [Clock]
+ * @param   <L>         the [Logger] type
  * @return              a [Logger]
  */
-fun LoggerFactory.getLogger(kotlinClass: KClass<*>): Logger = getLogger(kotlinClass.qualifiedName)
+fun <L: Logger> LoggerFactory<L>.getLogger(
+    kotlinClass: KClass<*>,
+    level: Level = defaultLevel,
+    clock: Clock = defaultClock,
+): L = getLogger(kotlinClass.qualifiedName, level, clock)
 
+/**
+ * Output an error message supplied by a lambda, along with a [Throwable].  This duplicates a function in the [Logger]
+ * class, but with the parameters reversed to allow the use of Kotlin lambda syntax.
+ *
+ * @param   throwable           the [Throwable]
+ * @param   messageSupplier     the message supplier lambda
+ */
 fun Logger.error(throwable: Throwable, messageSupplier: () -> Any) = error(messageSupplier, throwable)
 
 /**

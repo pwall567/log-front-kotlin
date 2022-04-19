@@ -29,7 +29,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.expect
-import java.time.Instant
 
 class LoggerUtilTest {
 
@@ -51,7 +50,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should check whether LogItem is trace`() {
-        val logItem = LogItem(Instant.now(), "xyz", Level.TRACE, "Hello", null)
+        val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.TRACE, "Hello", null)
         assertTrue { logItem isTrace "Hello" }
         assertTrue { logItem isTrace Regex("^H") }
         assertFalse { logItem isDebug "Hello" }
@@ -60,7 +59,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should check whether LogItem is debug`() {
-        val logItem = LogItem(Instant.now(), "xyz", Level.DEBUG, "Hello", null)
+        val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.DEBUG, "Hello", null)
         assertTrue { logItem isDebug "Hello" }
         assertTrue { logItem isDebug Regex("^H") }
         assertFalse { logItem isInfo "Hello" }
@@ -69,7 +68,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should check whether LogItem is info`() {
-        val logItem = LogItem(Instant.now(), "xyz", Level.INFO, "Hello", null)
+        val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.INFO, "Hello", null)
         assertTrue { logItem isInfo "Hello" }
         assertTrue { logItem isInfo Regex("^H") }
         assertFalse { logItem isWarning "Hello" }
@@ -78,7 +77,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should check whether LogItem is warning`() {
-        val logItem = LogItem(Instant.now(), "xyz", Level.WARN, "Hello", null)
+        val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.WARN, "Hello", null)
         assertTrue { logItem isWarning "Hello" }
         assertTrue { logItem isWarning Regex("^H") }
         assertFalse { logItem isError "Hello" }
@@ -87,7 +86,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should check whether LogItem is error`() {
-        val logItem = LogItem(Instant.now(), "xyz", Level.ERROR, "Hello", null)
+        val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.ERROR, "Hello", null)
         assertTrue { logItem isError "Hello" }
         assertTrue { logItem isError Regex("^H") }
         assertFalse { logItem isWarning  "Hello" }

@@ -2,7 +2,7 @@
  * @(#) LoggerDelegate.kt
  *
  * log-front-kotlin  Logging interface in Kotlin
- * Copyright (c) 2020 Peter Wall
+ * Copyright (c) 2020, 2022 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import kotlin.reflect.full.companionObject
  *
  * @author  Peter Wall
  */
-class LoggerDelegate<R: Any>(private val loggerFactory: LoggerFactory = LoggerFactory.getDefault()) :
+class LoggerDelegate<R: Any>(private val loggerFactory: LoggerFactory<*> = LoggerFactory.getDefault()) :
         ReadOnlyProperty<R, Logger> {
 
     private var logger: Logger = delegateLogger

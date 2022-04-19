@@ -22,6 +22,13 @@ There is an additional `getLogger` function on `LoggerFactory` which takes a Kot
     val log = LoggerFactory.getDefault().getLogger(ThisClass::class)
 ```
 
+The function also allows the `Level` and a `Clock` to be specified as optional parameters:
+```kotlin
+
+    val log = LoggerFactory.getDefault().getLogger(ThisClass::class, level = Level.INFO,
+            clock = Clock.fixed(Instant.now(), ZoneOffset.UTC))
+```
+
 To instantiate a `Logger` for the current class, regardless of whether the call is made from within the class or its
 companion object:
 ```kotlin
@@ -64,25 +71,25 @@ There are, of course, `isTrace`, `isDebug` and `isWarning` functions in both the
 
 ## Dependency Specification
 
-The latest version of the library is 2.6, and it may be obtained from the Maven Central repository.
+The latest version of the library is 3.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>2.6</version>
+      <version>3.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:2.6'
+    implementation 'net.pwall.log:log-front-kotlin:3.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:2.6")
+    implementation("net.pwall.log:log-front-kotlin:3.0")
 ```
 
 Peter Wall
 
-2022-01-27
+2022-04-20
