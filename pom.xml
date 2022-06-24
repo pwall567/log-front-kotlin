@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.pwall.log</groupId>
   <artifactId>log-front-kotlin</artifactId>
-  <version>4.0</version>
+  <version>5.0</version>
   <name>Logging interface in Kotlin</name>
-  <description>Classes to simplify integration with logging systems - Kotlin extensions</description>
+  <description>Simple logging interface and basic implementation - Kotlin extensions</description>
   <packaging>jar</packaging>
   <url>https://github.com/pwall567/log-front-kotlin</url>
 
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front</artifactId>
-      <version>4.0</version>
+      <version>5.0</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/pwall567/log-front-kotlin.svg?branch=main)](https://app.travis-ci.com/github/pwall567/log-front-kotlin)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.4.0&color=blue&logo=kotlin)](https://github.com/JetBrains/kotlin/releases/tag/v1.4.0)
+[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.6.10&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.5.20)
 [![Maven Central](https://img.shields.io/maven-central/v/net.pwall.log/log-front-kotlin?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.log%22%20AND%20a:%22log-front-kotlin%22)
 
 Logging interface in Kotlin.
@@ -12,27 +12,12 @@ idiomatic manner.
 
 ## Usage
 
-### Logging
-
-The functionality of this library is mostly documented along with the Java library.
-There are a small number of additional functions, along with some different patterns of usage.
-
-There is an additional `getLogger` function on `LoggerFactory` which takes a Kotlin `KClass`:
-```kotlin
-    val log = LoggerFactory.getDefault().getLogger(ThisClass::class)
-```
-
-The function also allows the `Level` and a `Clock` to be specified as optional parameters:
-```kotlin
-
-    val log = LoggerFactory.getDefault().getLogger(ThisClass::class, level = Level.INFO,
-            clock = Clock.fixed(Instant.now(), ZoneOffset.UTC))
-```
+### Quick Start
 
 To instantiate a `Logger` for the current class, regardless of whether the call is made from within the class or its
 companion object:
 ```kotlin
-    var log by LoggerDelegate()
+    val log = getLogger()   // requires: import net.pwall.log.getLogger
 ```
 
 To output a log "INFO"-level message:
@@ -46,6 +31,51 @@ There are similar functions `trace`, `debug`, `warn` and `error`, and an additio
 `Throwable` as the first parameter:
 ```kotlin
         log.error(exception) { "Something went wrong!" }
+```
+
+### More Detail
+
+The functionality of this library is largely documented with the Java library.
+There are a small number of additional functions, along with some different patterns of usage.
+
+There are several top-level functions to acquire a `Logger` instance.
+These should be used in place of the functions of the `Log` class &ndash; they achieve the same result, but the return
+type of these functions is non-nullable, as opposed to the Java functions which are of indeterminate nullability.
+
+- `getLogger()`
+- `getLogger(name: String)`
+- `getLogger(javaClass: Class<*>)`
+- `getLogger(kClass: KClass<*>)`
+- `getLogger(level: Level)`
+- `getLogger(name: String, level: Level)`
+- `getLogger(javaClass: Class<*>, level: Level)`
+- `getLogger(kClass: KClass<*>, level: Level)`
+- `getLogger(clock: Clock)`
+- `getLogger(name: String, clock: Clock)`
+- `getLogger(javaClass: Class<*>, clock: Clock)`
+- `getLogger(kClass: KClass<*>, clock: Clock)`
+- `getLogger(level: Level, clock: Clock)`
+- `getLogger(name: String, level: Level, clock: Clock)`
+- `getLogger(javaClass: Class<*>, level: Level, clock: Clock)`
+- `getLogger(kClass: KClass<*>, level: Level, clock: Clock)`
+
+When no logger name is provided, the name will be determined automatically from the calling class.
+Otherwise, the name may be specified as a `String`, or as a Java `Class` or a Kotlin `KClass`, in which case the
+fully-qualified class name will be used.
+
+The `Level` and `Clock`, if specified, will be provided to the `LoggerFactory` to be used in the instantiation of the
+`Logger`, although as noted in the description of the `log-front` library, not all implementations will make use of
+these parameters.
+
+There is also an additional `getLogger` function on `LoggerFactory` which takes a Kotlin `KClass`:
+```kotlin
+    val log = loggerFactory.getLogger(ThisClass::class)
+```
+
+The function also allows the `Level` and a `Clock` to be specified as optional parameters:
+```kotlin
+    val log = loggerFactory.getLogger(ThisClass::class, level = Level.INFO,
+            clock = Clock.fixed(Instant.now(), ZoneOffset.UTC))
 ```
 
 ### Debugging
@@ -69,27 +99,33 @@ Or to test whether a `LogItem` is an `ERROR`-level item with a message starting 
 
 There are, of course, `isTrace`, `isDebug` and `isWarning` functions in both the exact match (string) and regex forms.
 
+### `LoggerDelegate`
+
+The `LoggerDelegate` class from previous versions of the library is retained, but its use has been superseded by the
+`getLogger()` functions.
+It may be deprecated in future releases.
+
 ## Dependency Specification
 
-The latest version of the library is 4.0, and it may be obtained from the Maven Central repository.
+The latest version of the library is 5.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>4.0</version>
+      <version>5.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:4.0'
+    implementation 'net.pwall.log:log-front-kotlin:5.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:4.0")
+    implementation("net.pwall.log:log-front-kotlin:5.0")
 ```
 
 Peter Wall
 
-2022-05-04
+2022-06-22

@@ -32,9 +32,11 @@ import kotlin.reflect.full.companionObject
 /**
  * Get a [Logger] for the enclosing class, even when invoked from a `companion object`.
  *
+ * This class has been superseded by the use of the `getLogger()` functions; it may be deprecated in future releases.
+ *
  * @author  Peter Wall
  */
-class LoggerDelegate<R: Any>(private val loggerFactory: LoggerFactory<*> = LoggerFactory.getDefault()) :
+class LoggerDelegate<R : Any>(private val loggerFactory: LoggerFactory<*> = Log.getDefaultLoggerFactory()) :
         ReadOnlyProperty<R, Logger> {
 
     private var logger: Logger = delegateLogger
@@ -53,7 +55,7 @@ class LoggerDelegate<R: Any>(private val loggerFactory: LoggerFactory<*> = Logge
     }
 
     companion object {
-        val delegateLogger: Logger = LoggerFactory.getDefaultLogger(LoggerDelegate::class.qualifiedName)
+        val delegateLogger: Logger = Log.getDefaultLoggerFactory().getLogger(LoggerDelegate::class.qualifiedName)
     }
 
 }

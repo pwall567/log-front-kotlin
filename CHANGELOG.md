@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [5.0] - 2022-06-22
+### Changed
+- `pom.xml`: updated to later version of `log-front`
+- `LoggerUtil`: added `getLogger()` functions
+
 ## [4.0] - 2022-05-04
 ### Changed
 - `pom.xml`: updated to later version of `log-front`
