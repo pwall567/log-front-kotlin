@@ -107,25 +107,25 @@ It may be deprecated in future releases.
 
 ## Dependency Specification
 
-The latest version of the library is 5.1.2, and it may be obtained from the Maven Central repository.
+The latest version of the library is 5.2, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>5.1.2</version>
+      <version>5.2</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:5.1.2'
+    implementation 'net.pwall.log:log-front-kotlin:5.2'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:5.1.2")
+    implementation("net.pwall.log:log-front-kotlin:5.2")
 ```
 
 Peter Wall
 
-2022-10-19
+2023-12-02
