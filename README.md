@@ -1,8 +1,8 @@
 # log-front-kotlin
 
-[![Build Status](https://travis-ci.com/pwall567/log-front-kotlin.svg?branch=main)](https://app.travis-ci.com/github/pwall567/log-front-kotlin)
+[![Build Status](https://github.com/pwall567/log-front-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/pwall567/log-front-kotlin/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.6.10&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.5.20)
+[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.9.24&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.9.24)
 [![Maven Central](https://img.shields.io/maven-central/v/net.pwall.log/log-front-kotlin?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.log%22%20AND%20a:%22log-front-kotlin%22)
 
 Logging interface in Kotlin.
@@ -107,25 +107,25 @@ It may be deprecated in future releases.
 
 ## Dependency Specification
 
-The latest version of the library is 5.3, and it may be obtained from the Maven Central repository.
+The latest version of the library is 5.3.1, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>net.pwall.log</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>5.3</version>
+      <version>5.3.1</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:5.3'
+    implementation 'net.pwall.log:log-front-kotlin:5.3.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:5.3")
+    implementation("net.pwall.log:log-front-kotlin:5.3.1")
 ```
 
 Peter Wall
 
-2024-02-25
+2024-07-25

@@ -2,6 +2,14 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [5.3.1] - 2024-07-25
+### Added
+- `build.yml`, `deploy.yml`: converted project to GitHub Actions
+### Changes
+- `pom.xml`: upgraded Kotlin version to 1.9.24
+### Removed
+- `.travis.yml`
+
 ## [5.3] - 2023-02-25
 ### Changed
 - `LoggerUtil.kt`: added `assertHasXxxx` functions
