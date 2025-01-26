@@ -26,18 +26,19 @@
 package net.pwall.log
 
 import kotlin.test.Test
-import kotlin.test.expect
+
+import io.kstuff.test.shouldBe
 
 class LoggerDelegateTest {
 
     private val log1 by LoggerDelegate()
 
     @Test fun `should create logger for class`() {
-        expect("net.pwall.log.LoggerDelegateTest") { log1.name }
+        log1.name shouldBe "net.pwall.log.LoggerDelegateTest"
     }
 
     @Test fun `should create logger for class when invoked from companion object`() {
-        expect("net.pwall.log.LoggerDelegateTest") { log2.name }
+        log2.name shouldBe "net.pwall.log.LoggerDelegateTest"
     }
 
     companion object {

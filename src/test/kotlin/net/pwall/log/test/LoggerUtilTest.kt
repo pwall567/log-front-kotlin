@@ -26,16 +26,16 @@
 package net.pwall.log.test
 
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
-import kotlin.test.assertSame
-import kotlin.test.assertTrue
-import kotlin.test.expect
 
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
+
+import io.kstuff.test.shouldBe
+import io.kstuff.test.shouldBeNonNull
+import io.kstuff.test.shouldBeSameInstance
+import io.kstuff.test.shouldContain
+import io.kstuff.test.shouldThrow
 
 import net.pwall.log.DynamicLoggerFactory
 import net.pwall.log.Level
@@ -61,164 +61,164 @@ class LoggerUtilTest {
     @Test fun `should get logger for current class`() {
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger()) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(Level.DEBUG)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBeSameInstance fixedClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(Level.DEBUG, fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBeSameInstance fixedClock
         }
     }
 
     @Test fun `should get logger for specified name`() {
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name")) {
-            expect("Name") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "Name"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", Level.DEBUG)) {
-            expect("Name") { name }
-            expect(Level.DEBUG) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "Name"
+            level shouldBe Level.DEBUG
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", fixedClock)) {
-            expect("Name") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "Name"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBeSameInstance fixedClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", Level.TRACE, fixedClock)) {
-            expect("Name") { name }
-            expect(Level.TRACE) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "Name"
+            level shouldBe Level.TRACE
+            clock shouldBeSameInstance fixedClock
         }
     }
 
     @Test fun `should get logger for Java Class`() {
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, Level.DEBUG)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBeSameInstance fixedClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, Level.DEBUG, fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBeSameInstance fixedClock
         }
     }
 
     @Test fun `should get logger for KClass`() {
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, Level.DEBUG)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            expect(Log.getDefaultLoggerFactory().defaultClock) { clock }
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Log.getDefaultLoggerFactory().defaultLevel) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            clock shouldBeSameInstance fixedClock
         }
         Log.setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, Level.DEBUG, fixedClock)) {
-            expect("net.pwall.log.test.LoggerUtilTest") { name }
-            expect(Level.DEBUG) { level }
-            assertSame(fixedClock, clock)
+            name shouldBe "net.pwall.log.test.LoggerUtilTest"
+            level shouldBe Level.DEBUG
+            clock shouldBeSameInstance fixedClock
         }
     }
 
     @Test fun `should get Logger from LoggerFactory by KClass`() {
         val factory = Log.getDefaultLoggerFactory()
         val logger = factory.getLogger(LoggerUtilTest::class)
-        expect("net.pwall.log.test.LoggerUtilTest") { logger.name }
+        logger.name shouldBe "net.pwall.log.test.LoggerUtilTest"
     }
     @Test fun `should get logger in companion object`() {
-        expect("net.pwall.log.test.LoggerUtilTest") { companionObjectLogger1.name }
-        expect("net.pwall.log.test.LoggerUtilTest") { companionObjectLogger2.name }
+        companionObjectLogger1.name shouldBe "net.pwall.log.test.LoggerUtilTest"
+        companionObjectLogger2.name shouldBe "net.pwall.log.test.LoggerUtilTest"
     }
 
     @Test fun `should check whether LogItem is trace`() {
         val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.TRACE, "Hello", null)
-        assertTrue { logItem isTrace "Hello" }
-        assertTrue { logItem isTrace Regex("^H") }
-        assertFalse { logItem isDebug "Hello" }
-        assertFalse { logItem isTrace "Goodbye" }
-        assertFalse { logItem isTrace Regex("^Hello world") }
+        logItem isTrace "Hello" shouldBe true
+        logItem isTrace Regex("^H") shouldBe true
+        logItem isDebug "Hello" shouldBe false
+        logItem isTrace "Goodbye" shouldBe false
+        logItem isTrace Regex("^Hello world") shouldBe false
     }
 
     @Test fun `should check whether LogItem is debug`() {
         val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.DEBUG, "Hello", null)
-        assertTrue { logItem isDebug "Hello" }
-        assertTrue { logItem isDebug Regex("^H") }
-        assertFalse { logItem isInfo "Hello" }
-        assertFalse { logItem isDebug "Goodbye" }
-        assertFalse { logItem isDebug Regex("^Hello world") }
+        logItem isDebug "Hello" shouldBe true
+        logItem isDebug Regex("^H") shouldBe true
+        logItem isInfo "Hello" shouldBe false
+        logItem isDebug "Goodbye" shouldBe false
+        logItem isDebug Regex("^Hello world") shouldBe false
     }
 
     @Test fun `should check whether LogItem is info`() {
         val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.INFO, "Hello", null)
-        assertTrue { logItem isInfo "Hello" }
-        assertTrue { logItem isInfo Regex("^H") }
-        assertFalse { logItem isWarning "Hello" }
-        assertFalse { logItem isInfo "Goodbye" }
-        assertFalse { logItem isInfo Regex("^Hello world") }
+        logItem isInfo "Hello" shouldBe true
+        logItem isInfo Regex("^H") shouldBe true
+        logItem isWarning "Hello" shouldBe false
+        logItem isInfo "Goodbye" shouldBe false
+        logItem isInfo Regex("^Hello world") shouldBe false
     }
 
     @Test fun `should check whether LogItem is warning`() {
         val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.WARN, "Hello", null)
-        assertTrue { logItem isWarning "Hello" }
-        assertTrue { logItem isWarning Regex("^H") }
-        assertFalse { logItem isError "Hello" }
-        assertFalse { logItem isWarning "Goodbye" }
-        assertFalse { logItem isWarning Regex("^Hello world") }
+        logItem isWarning "Hello" shouldBe true
+        logItem isWarning Regex("^H") shouldBe true
+        logItem isError "Hello" shouldBe false
+        logItem isWarning "Goodbye" shouldBe false
+        logItem isWarning Regex("^Hello world") shouldBe false
     }
 
     @Test fun `should check whether LogItem is error`() {
         val logItem = LogItem(System.currentTimeMillis(), "xyz", Level.ERROR, "Hello", null)
-        assertTrue { logItem isError "Hello" }
-        assertTrue { logItem isError Regex("^H") }
-        assertFalse { logItem isWarning  "Hello" }
-        assertFalse { logItem isError "Goodbye" }
-        assertFalse { logItem isError Regex("^Hello world") }
+        logItem isError "Hello" shouldBe true
+        logItem isError Regex("^H") shouldBe true
+        logItem isWarning  "Hello" shouldBe false
+        logItem isError "Goodbye" shouldBe false
+        logItem isError Regex("^Hello world") shouldBe false
     }
 
     @Test fun `should check whether LogList contains TRACE item`() {
@@ -226,10 +226,10 @@ class LoggerUtilTest {
             val logger = getLogger("LogTrace", Level.TRACE)
             logger.trace { "Trace message" }
             list.assertHasTrace("Trace message")
-            assertFailsWith<AssertionError> { list.assertHasTrace("Wrong") }.let {
+            shouldThrow<AssertionError> { list.assertHasTrace("Wrong") }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain TRACE Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain TRACE Wrong"
                 }
             }
         }
@@ -240,10 +240,10 @@ class LoggerUtilTest {
             val logger = getLogger("LogTrace", Level.TRACE)
             logger.trace { "Trace message" }
             list.assertHasTrace(Regex("Trace"))
-            assertFailsWith<AssertionError> { list.assertHasTrace(Regex("Wrong")) }.let {
+            shouldThrow<AssertionError> { list.assertHasTrace(Regex("Wrong")) }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain TRACE Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain TRACE Wrong"
                 }
             }
         }
@@ -254,10 +254,10 @@ class LoggerUtilTest {
             val logger = getLogger("LogDebug", Level.DEBUG)
             logger.debug { "Debug message" }
             list.assertHasDebug("Debug message")
-            assertFailsWith<AssertionError> { list.assertHasDebug("Wrong") }.let {
+            shouldThrow<AssertionError> { list.assertHasDebug("Wrong") }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain DEBUG Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain DEBUG Wrong"
                 }
             }
         }
@@ -268,10 +268,10 @@ class LoggerUtilTest {
             val logger = getLogger("LogDebug", Level.DEBUG)
             logger.debug { "Debug message" }
             list.assertHasDebug(Regex("Debug"))
-            assertFailsWith<AssertionError> { list.assertHasDebug(Regex("Wrong")) }.let {
+            shouldThrow<AssertionError> { list.assertHasDebug(Regex("Wrong")) }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain DEBUG Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain DEBUG Wrong"
                 }
             }
         }
@@ -281,10 +281,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.info { "Message" }
             list.assertHasInfo("Message")
-            assertFailsWith<AssertionError> { list.assertHasInfo("Wrong") }.let {
+            shouldThrow<AssertionError> { list.assertHasInfo("Wrong") }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain INFO Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain INFO Wrong"
                 }
             }
         }
@@ -294,10 +294,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.info { "Message" }
             list.assertHasInfo(Regex("Mess"))
-            assertFailsWith<AssertionError> { list.assertHasInfo(Regex("Wrong")) }.let {
+            shouldThrow<AssertionError> { list.assertHasInfo(Regex("Wrong")) }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain INFO Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain INFO Wrong"
                 }
             }
         }
@@ -307,10 +307,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.warn { "Warning message" }
             list.assertHasWarning("Warning message")
-            assertFailsWith<AssertionError> { list.assertHasWarning("Wrong") }.let {
+            shouldThrow<AssertionError> { list.assertHasWarning("Wrong") }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain WARN Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain WARN Wrong"
                 }
             }
         }
@@ -320,10 +320,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.warn { "Warning message" }
             list.assertHasWarning(Regex("Warning"))
-            assertFailsWith<AssertionError> { list.assertHasWarning(Regex("Wrong")) }.let {
+            shouldThrow<AssertionError> { list.assertHasWarning(Regex("Wrong")) }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain WARN Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain WARN Wrong"
                 }
             }
         }
@@ -333,10 +333,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.error { "Error message" }
             list.assertHasError("Error message")
-            assertFailsWith<AssertionError> { list.assertHasError("Wrong") }.let {
+            shouldThrow<AssertionError> { list.assertHasError("Wrong") }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain ERROR Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain ERROR Wrong"
                 }
             }
         }
@@ -346,10 +346,10 @@ class LoggerUtilTest {
         LogList().use {  list ->
             companionObjectLogger1.error { "Error message" }
             list.assertHasError(Regex("Error"))
-            assertFailsWith<AssertionError> { list.assertHasError(Regex("Wrong")) }.let {
+            shouldThrow<AssertionError> { list.assertHasError(Regex("Wrong")) }.let {
                 it.message.let {  message ->
-                    assertNotNull(message)
-                    assertTrue(message.contains("LogList does not contain ERROR Wrong"))
+                    message.shouldBeNonNull()
+                    message shouldContain "LogList does not contain ERROR Wrong"
                 }
             }
         }
