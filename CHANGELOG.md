@@ -2,6 +2,17 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [6.0] - 2025-01-30
+### Changes
+- `pom.xml`: moved to `io.kstuff` (package amd Maven group)
+- `LoggerUtil`: added `isTraceContaining()`, `isDebugContaining()`, `isInfoContaining()`, `isWarningContaining()` and
+  `isTraceContaining()`
+- `LoggerUtil`: renamed `isXxxx()` taking `Regex` to `isXxxxMatching()`
+- `LoggerUtil`: renamed `assertHasXxxx()` to `shouldHaveXxxx()`, renamed functions taking `Regex` as above
+- `LoggerUtil`: added `shouldHaveXxxxContaining()` functions
+### Removed
+- `LoggerDelegate`: superseded by `getLogger()` functions
+
 ## [5.4] - 2025-01-26
 ### Changes
 - `pom.xml`: upgraded Kotlin version to 2.0.21

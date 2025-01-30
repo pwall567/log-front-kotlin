@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/pwall567/log-front-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/pwall567/log-front-kotlin/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v2.0.21&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v2.0.21)
-[![Maven Central](https://img.shields.io/maven-central/v/net.pwall.log/log-front-kotlin?label=Maven%20Central)](https://search.maven.org/search?q=g:%22net.pwall.log%22%20AND%20a:%22log-front-kotlin%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.kstuff/log-front-kotlin?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kstuff%22%20AND%20a:%22log-front-kotlin%22)
 
 Logging interface in Kotlin.
 
@@ -17,7 +17,7 @@ idiomatic manner.
 To instantiate a `Logger` for the current class, regardless of whether the call is made from within the class or its
 companion object:
 ```kotlin
-    val log = getLogger()   // requires: import net.pwall.log.getLogger
+    val log = getLogger()   // requires: import io.kstuff.log.getLogger
 ```
 
 To output a log "INFO"-level message:
@@ -101,31 +101,30 @@ There are, of course, `isTrace`, `isDebug` and `isWarning` functions in both the
 
 ### `LoggerDelegate`
 
-The `LoggerDelegate` class from previous versions of the library is retained, but its use has been superseded by the
+The `LoggerDelegate` class from previous versions of the library has been removed; its use has been superseded by the
 `getLogger()` functions.
-It may be deprecated in future releases.
 
 ## Dependency Specification
 
-The latest version of the library is 5.4, and it may be obtained from the Maven Central repository.
+The latest version of the library is 6.0, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
-      <groupId>net.pwall.log</groupId>
+      <groupId>io.kstuff</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>5.4</version>
+      <version>6.0</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'net.pwall.log:log-front-kotlin:5.4'
+    implementation 'io.kstuff:log-front-kotlin:6.0'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("net.pwall.log:log-front-kotlin:5.4")
+    implementation("io.kstuff:log-front-kotlin:6.0")
 ```
 
 Peter Wall
 
-2025-01-26
+2025-01-30

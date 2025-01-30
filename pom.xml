@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.pwall.log</groupId>
+
   <artifactId>log-front-kotlin</artifactId>
-  <version>5.4</version>
+  <version>6.0</version>
   <name>Logging interface in Kotlin</name>
   <description>Simple logging interface and basic implementation - Kotlin extensions</description>
   <packaging>jar</packaging>
   <url>https://github.com/pwall567/log-front-kotlin</url>
 
   <parent>
-    <groupId>net.pwall.maven</groupId>
-    <artifactId>maven-kotlin</artifactId>
-    <version>8.0</version>
+    <groupId>io.kstuff</groupId>
+    <artifactId>kstuff-maven</artifactId>
+    <version>2.0</version>
   </parent>
 
   <properties>
@@ -62,13 +61,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>net.pwall.log</groupId>
+      <groupId>io.jstuff</groupId>
       <artifactId>log-front</artifactId>
-      <version>5.3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-reflect</artifactId>
+      <version>6.0</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>

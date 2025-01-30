@@ -23,12 +23,14 @@
  * SOFTWARE.
  */
 
-package net.pwall.log.test
+package io.kstuff.log.test
 
 import kotlin.test.Test
-import net.pwall.log.FormattingLoggerFactory
-import net.pwall.log.Log
-import net.pwall.log.getLogger
+
+import io.jstuff.log.FormattingLoggerFactory
+import io.jstuff.log.Log
+
+import io.kstuff.log.getLogger
 
 class FormattingLoggerTest {
 

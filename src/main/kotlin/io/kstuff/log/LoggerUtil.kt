@@ -2,7 +2,7 @@
  * @(#) LoggerUtil.kt
  *
  * log-front-kotlin  Logging interface in Kotlin
- * Copyright (c) 2020, 2021, 2022, 2024 Peter Wall
+ * Copyright (c) 2020, 2021, 2022, 2024, 2025 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,33 +23,40 @@
  * SOFTWARE.
  */
 
-package net.pwall.log
+package io.kstuff.log
 
 import kotlin.reflect.KClass
+
 import java.time.Clock
+
+import io.jstuff.log.Level
+import io.jstuff.log.Log
+import io.jstuff.log.LogItem
+import io.jstuff.log.Logger
+import io.jstuff.log.LoggerFactory
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the name of the calling class and the default level and clock.
  */
-fun getLogger(): Logger = Log.getLogger()
+fun getLogger(): Logger = Log.getLogger(LoggerFactory.callerInfo().className)
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the name of the calling class, the specified level and the
  * default clock.
  */
-fun getLogger(level: Level): Logger = Log.getLogger(level)
+fun getLogger(level: Level): Logger = Log.getLogger(LoggerFactory.callerInfo().className, level)
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the name of the calling class, the default level and the
  * specified clock.
  */
-fun getLogger(clock: Clock): Logger = Log.getLogger(clock)
+fun getLogger(clock: Clock): Logger = Log.getLogger(LoggerFactory.callerInfo().className, clock)
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the name of the calling class and the specified level and
  * clock.
  */
-fun getLogger(level: Level, clock: Clock): Logger = Log.getLogger(level, clock)
+fun getLogger(level: Level, clock: Clock): Logger = Log.getLogger(LoggerFactory.callerInfo().className, level, clock)
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the specified name and the default level and clock.
@@ -130,9 +137,15 @@ fun <L : Logger> LoggerFactory<L>.getLogger(
 infix fun LogItem.isTrace(text: String): Boolean = level == Level.TRACE && message == text
 
 /**
+ * Test whether a [LogItem] represents a message with level `TRACE` containing the specified text.
+ */
+infix fun LogItem.isTraceContaining(text: String): Boolean = level == Level.TRACE && message.toString().contains(text)
+
+/**
  * Test whether a [LogItem] represents a message with level `TRACE` and the specified text.
  */
-infix fun LogItem.isTrace(regex: Regex): Boolean = level == Level.TRACE && regex.containsMatchIn(message.toString())
+infix fun LogItem.isTraceMatching(regex: Regex): Boolean =
+        level == Level.TRACE && regex.containsMatchIn(message.toString())
 
 /**
  * Test whether a [LogItem] represents a message with level `DEBUG` and the specified text.
@@ -140,9 +153,15 @@ infix fun LogItem.isTrace(regex: Regex): Boolean = level == Level.TRACE && regex
 infix fun LogItem.isDebug(text: String): Boolean = level == Level.DEBUG && message == text
 
 /**
+ * Test whether a [LogItem] represents a message with level `DEBUG` containing the specified text.
+ */
+infix fun LogItem.isDebugContaining(text: String): Boolean = level == Level.DEBUG && message.toString().contains(text)
+
+/**
  * Test whether a [LogItem] represents a message with level `DEBUG` and the specified text.
  */
-infix fun LogItem.isDebug(regex: Regex): Boolean = level == Level.DEBUG && regex.containsMatchIn(message.toString())
+infix fun LogItem.isDebugMatching(regex: Regex): Boolean =
+        level == Level.DEBUG && regex.containsMatchIn(message.toString())
 
 /**
  * Test whether a [LogItem] represents a message with level `INFO` and the specified text.
@@ -150,9 +169,15 @@ infix fun LogItem.isDebug(regex: Regex): Boolean = level == Level.DEBUG && regex
 infix fun LogItem.isInfo(text: String): Boolean = level == Level.INFO && message == text
 
 /**
+ * Test whether a [LogItem] represents a message with level `INFO` containing the specified text.
+ */
+infix fun LogItem.isInfoContaining(text: String): Boolean = level == Level.INFO && message.toString().contains(text)
+
+/**
  * Test whether a [LogItem] represents a message with level `INFO` and text that matches the given [Regex].
  */
-infix fun LogItem.isInfo(regex: Regex): Boolean = level == Level.INFO && regex.containsMatchIn(message.toString())
+infix fun LogItem.isInfoMatching(regex: Regex): Boolean =
+        level == Level.INFO && regex.containsMatchIn(message.toString())
 
 /**
  * Test whether a [LogItem] represents a message with level `WARN` and the specified text.
@@ -160,9 +185,15 @@ infix fun LogItem.isInfo(regex: Regex): Boolean = level == Level.INFO && regex.c
 infix fun LogItem.isWarning(text: String): Boolean = level == Level.WARN && message == text
 
 /**
+ * Test whether a [LogItem] represents a message with level `WARN` containing the specified text.
+ */
+infix fun LogItem.isWarningContaining(text: String): Boolean = level == Level.WARN && message.toString().contains(text)
+
+/**
  * Test whether a [LogItem] represents a message with level `WARN` and text that matches the given [Regex].
  */
-infix fun LogItem.isWarning(regex: Regex): Boolean = level == Level.WARN && regex.containsMatchIn(message.toString())
+infix fun LogItem.isWarningMatching(regex: Regex): Boolean =
+        level == Level.WARN && regex.containsMatchIn(message.toString())
 
 /**
  * Test whether a [LogItem] represents a message with level `ERROR` and the specified text.
@@ -170,9 +201,15 @@ infix fun LogItem.isWarning(regex: Regex): Boolean = level == Level.WARN && rege
 infix fun LogItem.isError(text: String): Boolean = level == Level.ERROR && message == text
 
 /**
+ * Test whether a [LogItem] represents a message with level `ERROR` and the specified text.
+ */
+infix fun LogItem.isErrorContaining(text: String): Boolean = level == Level.ERROR && message.toString().contains(text)
+
+/**
  * Test whether a [LogItem] represents a message with level `ERROR` and text that matches the given [Regex].
  */
-infix fun LogItem.isError(regex: Regex): Boolean = level == Level.ERROR && regex.containsMatchIn(message.toString())
+infix fun LogItem.isErrorMatching(regex: Regex): Boolean =
+        level == Level.ERROR && regex.containsMatchIn(message.toString())
 
 /**
  * Filter list by name.
@@ -180,91 +217,146 @@ infix fun LogItem.isError(regex: Regex): Boolean = level == Level.ERROR && regex
 fun Iterable<LogItem>.subList(name: String): Iterable<LogItem> = filter { it.name == name }
 
 /**
- * Test whether a [LogList] has a `TRACE` entry with the specified text.
+ * Test whether a collection of [LogItem] has a `TRACE` entry with the specified text.
  */
-infix fun Iterable<LogItem>.assertHasTrace(text: String) {
-    if (!any {it isTrace text }) {
+infix fun Iterable<LogItem>.shouldHaveTrace(text: String) {
+    if (!any { it isTrace text }) {
         throw AssertionError("LogList does not contain TRACE $text\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has a `TRACE` entry matching the specified [Regex].
+ * Test whether a collection of [LogItem] has a `TRACE` entry containing the specified text.
  */
-infix fun Iterable<LogItem>.assertHasTrace(regex: Regex) {
-    if (!any {it isTrace regex }) {
+infix fun Iterable<LogItem>.shouldHaveTraceContaining(text: String) {
+    if (!any { it isTraceContaining text }) {
+        throw AssertionError(
+            "LogList does not contain TRACE containing $text\nLog lines:\n${joinToString(separator = "\n")}"
+        )
+    }
+}
+
+/**
+ * Test whether a collection of [LogItem] has a `TRACE` entry matching the specified [Regex].
+ */
+infix fun Iterable<LogItem>.shouldHaveTraceMatching(regex: Regex) {
+    if (!any { it isTraceMatching regex }) {
         throw AssertionError("LogList does not contain TRACE $regex\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has a `DEBUG` entry with the specified text.
+ * Test whether a collection of [LogItem] has a `DEBUG` entry with the specified text.
  */
-infix fun Iterable<LogItem>.assertHasDebug(text: String) {
-    if (!any {it isDebug text }) {
+infix fun Iterable<LogItem>.shouldHaveDebug(text: String) {
+    if (!any { it isDebug text }) {
         throw AssertionError("LogList does not contain DEBUG $text\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has a `DEBUG` entry matching the specified [Regex].
+ * Test whether a collection of [LogItem] has a `DEBUG` entry containing the specified text.
  */
-infix fun Iterable<LogItem>.assertHasDebug(regex: Regex) {
-    if (!any {it isDebug regex }) {
+infix fun Iterable<LogItem>.shouldHaveDebugContaining(text: String) {
+    if (!any { it isDebugContaining  text }) {
+        throw AssertionError(
+            "LogList does not contain DEBUG containing $text\nLog lines:\n${joinToString(separator = "\n")}"
+        )
+    }
+}
+
+/**
+ * Test whether a collection of [LogItem] has a `DEBUG` entry matching the specified [Regex].
+ */
+infix fun Iterable<LogItem>.shouldHaveDebugMatching(regex: Regex) {
+    if (!any { it isDebugMatching regex }) {
         throw AssertionError("LogList does not contain DEBUG $regex\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has an `INFO` entry with the specified text.
+ * Test whether a collection of [LogItem] has an `INFO` entry with the specified text.
  */
-infix fun Iterable<LogItem>.assertHasInfo(text: String) {
-    if (!any {it isInfo text }) {
+infix fun Iterable<LogItem>.shouldHaveInfo(text: String) {
+    if (!any { it isInfo text }) {
         throw AssertionError("LogList does not contain INFO $text\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has an `INFO` entry matching the specified [Regex].
+ * Test whether a collection of [LogItem] has an `INFO` entry containing the specified text.
  */
-infix fun Iterable<LogItem>.assertHasInfo(regex: Regex) {
-    if (!any {it isInfo regex }) {
+infix fun Iterable<LogItem>.shouldHaveInfoContaining(text: String) {
+    if (!any { it isInfoContaining text }) {
+        throw AssertionError(
+            "LogList does not contain INFO containing $text\nLog lines:\n${joinToString(separator = "\n")}"
+        )
+    }
+}
+
+/**
+ * Test whether a collection of [LogItem] has an `INFO` entry matching the specified [Regex].
+ */
+infix fun Iterable<LogItem>.shouldHaveInfoMatching(regex: Regex) {
+    if (!any { it isInfoMatching regex }) {
         throw AssertionError("LogList does not contain INFO $regex\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has a `WARN` entry with the specified text.
+ * Test whether a collection of [LogItem] has a `WARN` entry with the specified text.
  */
-infix fun Iterable<LogItem>.assertHasWarning(text: String) {
-    if (!any {it isWarning text }) {
+infix fun Iterable<LogItem>.shouldHaveWarning(text: String) {
+    if (!any { it isWarning text }) {
         throw AssertionError("LogList does not contain WARN $text\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has a `WARN` entry matching the specified [Regex].
+ * Test whether a collection of [LogItem] has a `WARN` entry containing the specified text.
  */
-infix fun Iterable<LogItem>.assertHasWarning(regex: Regex) {
-    if (!any {it isWarning regex }) {
+infix fun Iterable<LogItem>.shouldHaveWarningContaining(text: String) {
+    if (!any { it isWarningContaining text }) {
+        throw AssertionError(
+            "LogList does not contain WARN containing $text\nLog lines:\n${joinToString(separator = "\n")}"
+        )
+    }
+}
+
+/**
+ * Test whether a collection of [LogItem] has a `WARN` entry matching the specified [Regex].
+ */
+infix fun Iterable<LogItem>.shouldHaveWarningMatching(regex: Regex) {
+    if (!any { it isWarningMatching regex }) {
         throw AssertionError("LogList does not contain WARN $regex\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has an `ERROR` entry with the specified text.
+ * Test whether a collection of [LogItem] has an `ERROR` entry with the specified text.
  */
-infix fun Iterable<LogItem>.assertHasError(text: String) {
-    if (!any {it isError text }) {
+infix fun Iterable<LogItem>.shouldHaveError(text: String) {
+    if (!any { it isError text }) {
         throw AssertionError("LogList does not contain ERROR $text\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
 
 /**
- * Test whether a [LogList] has an `ERROR` entry matching the specified [Regex].
+ * Test whether a collection of [LogItem] has an `ERROR` entry containing the specified text.
  */
-infix fun Iterable<LogItem>.assertHasError(regex: Regex) {
-    if (!any {it isError regex }) {
+infix fun Iterable<LogItem>.shouldHaveErrorContaining(text: String) {
+    if (!any { it isErrorContaining text }) {
+        throw AssertionError(
+            "LogList does not contain ERROR containing $text\nLog lines:\n${joinToString(separator = "\n")}"
+        )
+    }
+}
+
+/**
+ * Test whether a collection of [LogItem] has an `ERROR` entry matching the specified [Regex].
+ */
+infix fun Iterable<LogItem>.shouldHaveErrorMatching(regex: Regex) {
+    if (!any { it isErrorMatching regex }) {
         throw AssertionError("LogList does not contain ERROR $regex\nLog lines:\n${joinToString(separator = "\n")}")
     }
 }
