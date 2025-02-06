@@ -27,10 +27,9 @@ package io.kstuff.log.test
 
 import kotlin.test.Test
 
-import io.jstuff.log.FormattingLoggerFactory
-import io.jstuff.log.Log
-
+import io.kstuff.log.FormattingLoggerFactory
 import io.kstuff.log.getLogger
+import io.kstuff.log.setDefaultLoggerFactory
 
 class FormattingLoggerTest {
 
@@ -43,7 +42,7 @@ class FormattingLoggerTest {
     }
 
     @Test fun `should set FormattingLogger as default`() {
-        Log.setDefaultLoggerFactory(FormattingLoggerFactory.getBasic())
+        setDefaultLoggerFactory(FormattingLoggerFactory.getBasic())
         val log = getLogger()
         log.info { "Bonjour!" }
     }

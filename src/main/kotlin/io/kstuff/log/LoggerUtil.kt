@@ -27,13 +27,103 @@ package io.kstuff.log
 
 import kotlin.reflect.KClass
 
+import java.io.PrintStream
 import java.time.Clock
 
-import io.jstuff.log.Level
 import io.jstuff.log.Log
-import io.jstuff.log.LogItem
-import io.jstuff.log.Logger
-import io.jstuff.log.LoggerFactory
+
+/**
+ * The dynamic [LoggerFactory], which tries to create a [Logger] as follows:
+ *
+ * 1. If `slf4j` is available on the class path, create an [Slf4jLogger]
+ * 2. If the system property `java.util.logging.config.file` is present, or if the file `logging.properties` is present
+ * as a resource, create a [JavaLogger]
+ * 3. Otherwise, create a [ConsoleLogger]
+ */
+typealias DynamicLoggerFactory = io.jstuff.log.DynamicLoggerFactory
+
+/**
+ * A [Logger] that outputs to a [PrintStream], usually `stdout` or `stderr`.  This has largely been superseded by the
+ * [FormattingLogger], and may be deprecated in future.
+ */
+typealias ConsoleLogger = io.jstuff.log.ConsoleLogger
+
+/**
+ * A [Logger] implementation that uses a supplied [LogFormatter], outputting to the supplied [LogAppender].
+ */
+typealias FormattingLogger<F, A> = io.jstuff.log.FormattingLogger<F, A>
+
+/**
+ * A [LoggerFactory] that creates [FormattingLogger] objects.
+ */
+typealias FormattingLoggerFactory<F, A> = io.jstuff.log.FormattingLoggerFactory<F, A>
+
+/**
+ * A [Logger] that uses the `java.util.logging` framework.
+ */
+typealias JavaLogger = io.jstuff.log.JavaLogger
+
+/**
+ * The logging level.
+ */
+typealias Level = io.jstuff.log.Level
+
+/**
+ * The main [Logger] interface.
+ */
+typealias Logger = io.jstuff.log.Logger
+
+/**
+ * The `LoggerFactory` supplies a [Logger] of a particular type.
+ */
+typealias LoggerFactory<L> = io.jstuff.log.LoggerFactory<L>
+
+/**
+ * Log Appender interface.
+ */
+typealias LogAppender<F> = io.jstuff.log.LogAppender<F>
+
+/**
+ * Log Formatter interface.
+ */
+typealias LogFormatter = io.jstuff.log.LogFormatter
+
+/**
+ * A log item, as used by the [LogList] class.  This is an immutable object.
+ */
+typealias LogItem = io.jstuff.log.LogItem
+
+/**
+ * An implementation of [LogListener] that stores log items in a list.
+ */
+typealias LogList = io.jstuff.log.LogList
+
+/**
+ * The [LogListener] class is the base class for an object that is called for every log event.  It is intended to be
+ * used only in unit tests.
+ *
+ * The constructor adds the object to a static list of listeners; the [Logger] classes will check for the presence of
+ * listeners and invoke them as required.
+ */
+typealias LogListener = io.jstuff.log.LogListener
+
+/**
+ * A [Logger] that outputs to `slf4j`.  To avoid a transitive dependency on that package, all references are made by
+ * means of reflection-based calls.
+ */
+typealias Slf4jLogger = io.jstuff.log.Slf4jLogger
+
+/**
+ * Get the default [LoggerFactory] (initially a [DynamicLoggerFactory])
+ */
+fun getDefaultLoggerFactory(): LoggerFactory<*> = Log.getDefaultLoggerFactory()
+
+/**
+ * Set the default logger factory.
+ */
+fun setDefaultLoggerFactory(loggerFactory: LoggerFactory<*>) {
+    Log.setDefaultLoggerFactory(loggerFactory)
+}
 
 /**
  * Get a [Logger] from the default [LoggerFactory], using the name of the calling class and the default level and clock.

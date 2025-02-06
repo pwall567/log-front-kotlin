@@ -37,13 +37,12 @@ import io.kstuff.test.shouldBeSameInstance
 import io.kstuff.test.shouldContain
 import io.kstuff.test.shouldThrow
 
-import io.jstuff.log.DynamicLoggerFactory
-import io.jstuff.log.Level
-import io.jstuff.log.Log
-import io.jstuff.log.LogItem
-import io.jstuff.log.LogList
-import io.jstuff.log.Logger
-
+import io.kstuff.log.DynamicLoggerFactory
+import io.kstuff.log.Level
+import io.kstuff.log.Logger
+import io.kstuff.log.LogItem
+import io.kstuff.log.LogList
+import io.kstuff.log.getDefaultLoggerFactory
 import io.kstuff.log.shouldHaveDebug
 import io.kstuff.log.shouldHaveDebugMatching
 import io.kstuff.log.shouldHaveError
@@ -70,6 +69,7 @@ import io.kstuff.log.isTraceContaining
 import io.kstuff.log.isWarning
 import io.kstuff.log.isWarningMatching
 import io.kstuff.log.isWarningContaining
+import io.kstuff.log.setDefaultLoggerFactory
 import io.kstuff.log.shouldHaveDebugContaining
 import io.kstuff.log.shouldHaveErrorContaining
 import io.kstuff.log.shouldHaveInfoContaining
@@ -80,25 +80,25 @@ import io.kstuff.log.subList
 class LoggerUtilTest {
 
     @Test fun `should get logger for current class`() {
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger()) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            level shouldBe getDefaultLoggerFactory().defaultLevel
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(Level.DEBUG)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            level shouldBe getDefaultLoggerFactory().defaultLevel
             clock shouldBeSameInstance fixedClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(Level.DEBUG, fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
@@ -107,25 +107,25 @@ class LoggerUtilTest {
     }
 
     @Test fun `should get logger for specified name`() {
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name")) {
             name shouldBe "Name"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            level shouldBe getDefaultLoggerFactory().defaultLevel
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", Level.DEBUG)) {
             name shouldBe "Name"
             level shouldBe Level.DEBUG
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", fixedClock)) {
             name shouldBe "Name"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            level shouldBe getDefaultLoggerFactory().defaultLevel
             clock shouldBeSameInstance fixedClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger("Name", Level.TRACE, fixedClock)) {
             name shouldBe "Name"
             level shouldBe Level.TRACE
@@ -134,25 +134,25 @@ class LoggerUtilTest {
     }
 
     @Test fun `should get logger for Java Class`() {
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            level shouldBe getDefaultLoggerFactory().defaultLevel
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, Level.DEBUG)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            level shouldBe getDefaultLoggerFactory().defaultLevel
             clock shouldBeSameInstance fixedClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class.java, Level.DEBUG, fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
@@ -161,25 +161,25 @@ class LoggerUtilTest {
     }
 
     @Test fun `should get logger for KClass`() {
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            level shouldBe getDefaultLoggerFactory().defaultLevel
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, Level.DEBUG)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
-            clock shouldBe Log.getDefaultLoggerFactory().defaultClock
+            clock shouldBe getDefaultLoggerFactory().defaultClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
-            level shouldBe Log.getDefaultLoggerFactory().defaultLevel
+            level shouldBe getDefaultLoggerFactory().defaultLevel
             clock shouldBeSameInstance fixedClock
         }
-        Log.setDefaultLoggerFactory(DynamicLoggerFactory())
+        setDefaultLoggerFactory(DynamicLoggerFactory())
         with(getLogger(LoggerUtilTest::class, Level.DEBUG, fixedClock)) {
             name shouldBe "io.kstuff.log.test.LoggerUtilTest"
             level shouldBe Level.DEBUG
@@ -188,7 +188,7 @@ class LoggerUtilTest {
     }
 
     @Test fun `should get Logger from LoggerFactory by KClass`() {
-        val factory = Log.getDefaultLoggerFactory()
+        val factory = getDefaultLoggerFactory()
         val logger = factory.getLogger(LoggerUtilTest::class)
         logger.name shouldBe "io.kstuff.log.test.LoggerUtilTest"
     }
@@ -457,7 +457,7 @@ class LoggerUtilTest {
     }
 
     companion object {
-        val companionObjectLogger1: Logger = Log.getDefaultLoggerFactory().logger
+        val companionObjectLogger1: Logger = getDefaultLoggerFactory().logger
         val companionObjectLogger2 = getLogger()
         val fixedClock: Clock = Clock.fixed(Instant.parse("2022-06-20T09:15:41.234Z"), ZoneOffset.UTC)
     }

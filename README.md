@@ -106,25 +106,25 @@ The `LoggerDelegate` class from previous versions of the library has been remove
 
 ## Dependency Specification
 
-The latest version of the library is 6.0, and it may be obtained from the Maven Central repository.
+The latest version of the library is 6.1, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>io.kstuff</groupId>
       <artifactId>log-front-kotlin</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'io.kstuff:log-front-kotlin:6.0'
+    implementation 'io.kstuff:log-front-kotlin:6.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("io.kstuff:log-front-kotlin:6.0")
+    implementation("io.kstuff:log-front-kotlin:6.1")
 ```
 
 Peter Wall
 
-2025-01-30
+2025-02-06

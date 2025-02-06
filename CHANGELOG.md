@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [6.1] - 2025-02-06
+### Changes
+- `pom.xml`: updated version of `log-front`
+- `LoggerUtil`: added `typealias` entries for classes in `log-front`
+
 ## [6.0] - 2025-01-30
 ### Changes
 - `pom.xml`: moved to `io.kstuff` (package amd Maven group)
