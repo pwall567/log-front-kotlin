@@ -2,6 +2,15 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+The major and minor version numbers of this repository (but not patch numbers) match the version numbers of the
+[`log-front`](https://github.com/pwall567/log-front) library on which it is based.
+
+## [6.2] - 2025-03-14
+### Changes
+- `Loggers`: renamed from `LoggerUtil`
+- `Loggers`: removed `LogList` and `LogItem` (moved to `log-front-testk`)
+- `pom.xml`: updated version of `log-front`
+
 ## [6.1] - 2025-02-06
 ### Changes
 - `pom.xml`: updated version of `log-front`
